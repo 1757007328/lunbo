@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<title>图片轮播</title>
+		<style type="text/css">
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			.main {
+				width: 760px;
+				height: 300px;
+				margin: 50px auto;
+				position: relative;
+			}
+			
+			.pic {
+				width: 760px;
+				height: 300px;
+				overflow: hidden;
+			}
+			
+			.pic ul li {
+				width: 760px;
+				height: 300px;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.img1 {
+				position: absolute;
+				left: -760px;
+				top: 0px;
+			}
+			
+			.img2 {
+				position: absolute;
+				left: -20px;
+				top: 0px;
+				display: none;
+			}
+			/*按钮区域*/
+			
+			.nav ul li {
+				border: 1px solid white;
+				width: 15px;
+				height: 15px;
+				float: left;
+				margin-left: 5px;
+			}
+			
+			.nav {
+				width: 125px;
+				height: 30px;
+				position: absolute;
+				left: 620px;
+				bottom: 10px;
+			}
+			
+			.select {
+				background-color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main">
+			<div class="pic">
+				<ul>
+					<li style="background:url(img/bg1.jpg);">
+						<img class="img1" src="img/text1.png" />
+						<img class="img2" src="img/con1.png" />
+					</li>
+					<li style="background:url(img/bg2.jpg);">
+						<img class="img1" src="img/text2.png" />
+						<img class="img2" src="img/con2.png" />
+					</li>
+					<li style="background:url(img/bg3.jpg);">
+						<img class="img1" src="img/text3.png" />
+						<img class="img2" src="img/con3.png" />
+					</li>
+					<li style="background:url(img/bg4.jpg);">
+						<img class="img1" src="img/text4.png" />
+						<img class="img2" src="img/con4.png" />
+					</li>
+					<li style="background:url(img/bg5.jpg);">
+						<img class="img1" src="img/text5.png" />
+						<img class="img2" src="img/con5.png" />
+					</li>
+				</ul>
+			</div>
+			<div class="nav">
+				<ul>
+					<li class="select"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				var i = 0;
+				
+				move();
+				
+				function move(){
+					$(".pic li").eq(i).fadeIn()
+					//当前li下的图片要出现（动画效果）
+					//.img1先显示，然后.img2再显示
+					.find(".img1").stop().animate({"left":0},1000,function(){
+						$(this).siblings().show().stop().animate({"left":0},500);
+					})
+					//其他的消失
+					.end().siblings().fadeOut()
+					//复原.img1,.img2的位置
+					.find(".img1").css("left","-760px").siblings().hide().css("left","-20px");
+					
+					$(".nav li").eq(i).addClass("select").siblings().removeClass("select");
+				}
+				setInterval(function(){
+					i++;
+					//控制临界值
+					if(i==$(".pic li").length){
+						i=0;
+					}
+					//当前li显示
+					move();
+					
+					
+				},3000);
+			})
+		</script>
+	</body>
+
+</html>
